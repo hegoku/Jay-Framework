@@ -9,9 +9,11 @@
  * 添加include_foler()
  * v0.5
  * 添加accessRules判断
+ * v0.6
+ * 如果controller没有重载accessRules方法,就默认所有action都能访问
  */
 ini_set('display_errors',  '1');
-include_folder('kernel');
+include_folder('../kernel');
 include_folder('include');
 include_folder('models');
 $config=include_once("config.php");
@@ -35,6 +37,11 @@ if(file_exists(JF::app()->ControllerDir."/".$class.".php")){
 	$tmp=new $class;
 	if(method_exists($tmp,"$action")){
 		$access=$tmp->accessRules();
+		//如果没有重载accessRules
+		if($access==null){
+			$tmp->$action();
+			exit(0);
+		}
 		foreach($access as $r){
 			if(in_array($action,$r['actions'])){
 				eval('$logic=('.$r['expression'].');');
