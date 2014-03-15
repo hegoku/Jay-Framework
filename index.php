@@ -11,12 +11,15 @@
  * 添加accessRules判断
  * v0.6
  * 如果controller没有重载accessRules方法,就默认所有action都能访问
+ * 添加session_start()
  */
 ini_set('display_errors',  '1');
 include_folder('../kernel');
 include_folder('include');
 include_folder('models');
 $config=include_once("config.php");
+
+session_start();
 
 JF::init($config);
 
