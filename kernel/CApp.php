@@ -52,5 +52,22 @@ class CApp{
 		header('Location: '.$url, true, $statusCode);
 		exit(0);
 	}
+
+	public function createUrl($route,$params=Array()){
+		if(isset($params['#'])){
+			$anchor='#'.$params['#'];
+			unset($params['#']);
+		}else
+			$anchor="";
+		$route=trim($route,'/');
+		$param="";
+		if($params==null)
+			$param="";
+		else
+			foreach($params as $k=>$v){
+				$param.="&".$k."=".$v;
+			}
+		return "index.php?r=".$route.$param.$anchor;
+	}
 }
 ?>
