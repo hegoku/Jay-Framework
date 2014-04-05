@@ -14,7 +14,7 @@
  * 添加session_start()
  */
 ini_set('display_errors',  '1');
-include_folder('../kernel');
+include_folder('kernel');
 include_folder('include');
 include_folder('models');
 $config=include_once("config.php");
@@ -29,15 +29,19 @@ if(isset($_GET['r'])){
 }else{
 	$route=array('0'=>'site','1'=>'index');
 }
-$class=$route[0];
 if(count($route)==2){
 	$action=$route[1];
+	$class=$route[0];
 }else{
-	$action="index";
+	$tmpr=explode("/",$_GET['r']);
+	$action=$tmpr[count($tmpr)-1];
+	array_pop($tmpr);
+	$class=implode("/",$tmpr);
 }
 if(file_exists(JF::app()->ControllerDir."/".$class.".php")){
 	include_once(JF::app()->ControllerDir."/".$class.".php");
-	$tmp=new $class;
+	$finalclass=explode("/",$class)[count(explode("/",$class))-1];
+	$tmp=new $finalclass;
 	if(method_exists($tmp,"$action")){
 		$access=$tmp->accessRules();
 		//如果没有重载accessRules
