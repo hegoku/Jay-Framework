@@ -35,6 +35,7 @@ insert()判断字段值为空时,写入null
 			if($property=='attributes' && is_array($value)){
 				$keys=array_keys($this->cols);
 				foreach($keys as $v){
+					$v=str_replace('"',"",$v);
 					if(isset($value[$v])){
 						if(get_magic_quotes_gpc()){
 							$this->cols[$v]=$value[$v];
