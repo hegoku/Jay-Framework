@@ -34,9 +34,9 @@ class Sqlite{
 			}
 			//preg_match('/(?<=\[)([^\]]*?)(?=\])/',strtok($field, " "),$matches);
 			//$fieldnames[$no]=$matches[0];
-			$filenames[$no]=strtok($field, " ");
+			$fieldnames[$no]=strtok($field, " ");
 		}
-		$cols=array_flip($filenames);
+		$cols=array_flip($fieldnames);
 	}
 }
 ?>
