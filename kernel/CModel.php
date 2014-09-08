@@ -69,8 +69,8 @@ insert()判断字段值为空时,写入null
 		}
 
 		public function find($sql){
-			if($sql!=""){$sql=" WHERE ".$sql;}
-			$result=JF::app()->$db->query("SELECT * FROM ".$this->table." ".$sql);
+			//if($sql!=""){$sql=" WHERE ".$sql;}
+			$result=JF::app()->db->query("SELECT * FROM ".$this->table." ".$sql);
 			$row=JF::app()->db->getRow($result);
 			if($row==null){
 				return null;

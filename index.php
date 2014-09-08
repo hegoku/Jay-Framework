@@ -40,7 +40,8 @@ if(count($route)==2){
 }
 if(file_exists(JF::app()->ControllerDir."/".$class.".php")){
 	include_once(JF::app()->ControllerDir."/".$class.".php");
-	$finalclass=explode("/",$class)[count(explode("/",$class))-1];
+	$tmpcount=explode("/",$class);
+	$finalclass=$tmpcount[count(explode("/",$class))-1];
 	$tmp=new $finalclass;
 	if(method_exists($tmp,"$action")){
 		$access=$tmp->accessRules();
