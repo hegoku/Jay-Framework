@@ -14,18 +14,16 @@ v0.5
 v0.6
 insert()判断字段值为空时,写入null
  */
-	class Model{
+	class CModel{
 		protected $table;
 		protected $pk;
 		public $cols=array();
-		function __construct($tb,$row=null){
-			$this->table=$tb;
-
-			JF::app()->db->getFields($tb,$this->cols,$this->pk);
+		function __construct($row=null){
+			JF::app()->db->getFields($this->table,$this->cols,$this->pk);
 			if($row==null){
 				foreach($this->cols as $k=>$col){
 					$this->cols[$k]=null;
-				}	
+				}
 			}else{
 				$this->cols=$row;
 			}
@@ -132,7 +130,7 @@ insert()判断字段值为空时,写入null
 		}
 
 		public static function model($className=__CLASS__){
-			return  new $className($className);
+			return  new $className();
 		}
 	}
 ?>

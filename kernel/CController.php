@@ -4,7 +4,7 @@
  * 添加redirect功能
  * 添加pageTitle属性
  */
-class Controller{
+class CController{
 	public $layout="layouts/main";
 	public $pageTitle="";
 	public function render($view,$var=null){
