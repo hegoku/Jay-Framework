@@ -1,10 +1,10 @@
 <?php
-class site extends Controller{
+class site extends CController{
 
 	public function index(){
 		$this->pageTitle="Home";
 		$this->render('index');
 	}
-	
+
 }
 ?>

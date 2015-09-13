@@ -13,6 +13,8 @@ v0.5
 添加update()
 v0.6
 insert()判断字段值为空时,写入null
+v.07
+取消魔术引号
  */
 	class CModel{
 		protected $table;
@@ -35,12 +37,7 @@ insert()判断字段值为空时,写入null
 				foreach($keys as $v){
 					$v=str_replace('"',"",$v);
 					if(isset($value[$v])){
-						if(get_magic_quotes_gpc()){
-							$this->cols[$v]=$value[$v];
-						}else{
-							$this->cols[$v]=addslashes($value[$v]);
-						}
-						//$this->cols[$v]=mysql_escape_string($value[$v]);
+						$this->cols[$v]=addslashes($value[$v]);
 					}else{
 						//$this->cols[$v]=null;
 					}
@@ -60,7 +57,7 @@ insert()判断字段值为空时,写入null
 			if($row==null){
 				return null;
 			}else{
-				$model=self::model($this->table);
+				$model=$this->model();
 				$model->attributes=$row;
 				return $model;
 			}
@@ -73,7 +70,7 @@ insert()判断字段值为空时,写入null
 			if($row==null){
 				return null;
 			}else{
-				$model=self::model($this->table);
+				$model=$this->model();
 				$model->attributes=$row;
 				return $model;
 			}
@@ -84,7 +81,7 @@ insert()判断字段值为空时,写入null
 			$result=JF::app()->db->query("SELECT * FROM ".$this->table." ".$sql);
 			$rows=Array();
 			while($row=JF::app()->db->getRow($result)){
-				$model=self::model($this->table);
+				$model=$this->model();
 				$model->attributes=$row;
 				array_push($rows,$model);
 			}
@@ -130,7 +127,7 @@ insert()判断字段值为空时,写入null
 		}
 
 		public static function model($className=__CLASS__){
-			return  new $className();
+			return new $className();
 		}
 	}
 ?>

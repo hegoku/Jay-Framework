@@ -1,6 +1,6 @@
 <?php
 /*
- * v0.2 
+ * v0.2
  * 增加自动包含include里的类
  * v0.3
  * 增加action判断
@@ -41,7 +41,7 @@ if(count($route)==2){
 if(file_exists(JF::app()->ControllerDir."/".$class.".php")){
 	include_once(JF::app()->ControllerDir."/".$class.".php");
 	$tmpcount=explode("/",$class);
-	$finalclass=$tmpcount[count(explode("/",$class))-1];
+	$finalclass=$tmpcount[count(explode("/",$class))-1]."Controller";
 	$tmp=new $finalclass;
 	if(method_exists($tmp,"$action")){
 		$access=$tmp->accessRules();
