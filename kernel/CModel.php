@@ -20,6 +20,7 @@ v.07
 		protected $table;
 		protected $pk;
 		public $cols=array();
+		public $_isNewRecord=true;
 		function __construct($row=null){
 			JF::app()->db->getFields($this->table,$this->cols,$this->pk);
 			if($row==null){
@@ -37,7 +38,7 @@ v.07
 				foreach($keys as $v){
 					$v=str_replace('"',"",$v);
 					if(isset($value[$v])){
-						$this->cols[$v]=addslashes($value[$v]);
+						$this->cols[$v]=$value[$v];
 					}else{
 						//$this->cols[$v]=null;
 					}
@@ -48,7 +49,7 @@ v.07
 		}
 
 		function __get($property){
-			return stripslashes($this->cols[$property]);
+			return $this->cols[$property];
 		}
 
 		public function findByPk($pk){
@@ -59,6 +60,7 @@ v.07
 			}else{
 				$model=$this->model();
 				$model->attributes=$row;
+				$model->_isNewRecord=false;
 				return $model;
 			}
 		}
@@ -76,16 +78,31 @@ v.07
 			}
 		}
 
-		public function findAll($sql=""){
+		public function findAll($sql="",$parms=null){
 			//if($sql!=""){$sql=" WHERE ".$sql;}
-			$result=JF::app()->db->query("SELECT * FROM ".$this->table." ".$sql);
+			if($sql==""){
+				$sqlTxt ='SELECT * FROM ' . $this->table;
+			}else{
+				$where = $this->parseWhere($sql,$parms);
+				$sqlTxt ='SELECT * FROM ' . $this->table.$where;
+			}
+			$result=JF::app()->db->query($sqlTxt);
 			$rows=Array();
 			while($row=JF::app()->db->getRow($result)){
 				$model=$this->model();
 				$model->attributes=$row;
+				$model->_isNewRecord=false;
 				array_push($rows,$model);
 			}
 			return $rows;
+		}
+
+		public function save(){
+			if($this->_isNewRecord){
+				return $this->insert();
+			}else{
+				return $this->update();
+			}
 		}
 
 		public function insert(){
@@ -128,6 +145,25 @@ v.07
 
 		public static function model($className=__CLASS__){
 			return new $className();
+		}
+
+		protected function parseWhere($where,$para=array()){
+			if($para){
+				foreach($para as $key=>$value){
+					if(is_array($value)){
+						foreach($value as $k=>$v){
+							$value[$k] = addslashes($v);
+						}
+						$para[$key] = "'".implode("','",$value)."'";
+					}
+					else{
+						$para[$key] = '"'.addslashes($value).'"';
+					}
+				}
+				$where = str_replace(array_keys($para),array_values($para),$where);
+			}
+			$where = " WHERE ".$where;
+			return $where;
 		}
 	}
 ?>
