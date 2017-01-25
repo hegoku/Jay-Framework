@@ -1,0 +1,21 @@
+{
+    "name": "dragonballsoft/jayframework",
+    "description": "A light PHP framework.",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jack He",
+            "email": "hegokujack@gmail.com",
+            "homepage": "http://www.dragonballsoft.cn"
+        }
+    ],
+    "require": {
+        "php": ">=5.6.4",
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    }
+}
