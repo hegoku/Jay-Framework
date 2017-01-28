@@ -13,10 +13,16 @@
     "require": {
         "php": ">=5.6.4"
     },
+    "require-dev": {
+        "symfony/var-dumper": ">=3.2"
+    },
     "autoload": {
         "psr-4": {
             "App\\": "app/",
-            "JF\\": "kernel/"
-        }
+            "JF\\Kernel\\": "kernel/"
+        },
+        "files": [
+            "kernel/helpers.php"
+        ]
     }
 }
