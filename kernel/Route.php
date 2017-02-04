@@ -4,8 +4,6 @@ namespace JF\Kernel;
 use Exception;
 
 class Route{
-    protected static $classNameSpance="App\\Controllers\\";
-
     /**
      * Route map,which load from route file
      * @var array
@@ -95,7 +93,7 @@ class Route{
             if($res>0){
                 $this->uri=$uri;
                 list($this->controller,$this->action)=explode("@",$action);
-                $this->controller=static::$classNameSpance.$this->controller;
+                $this->controller=Config::get('app.controller_namespace').$this->controller;
                 return;
             }
         }

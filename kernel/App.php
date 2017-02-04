@@ -9,6 +9,7 @@ class App extends Container{
 	public function __construct($basePath){
 		$this->basePath=$basePath;
 		Config::setBasePath($basePath);
+		Config::load('app');
 	}
 
 	public function run(){
