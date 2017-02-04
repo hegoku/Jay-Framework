@@ -1,7 +1,7 @@
 <?php
-return function($route){
-    $route->get('/','SiteController@index');
-    $route->get('/index/{fd}','SiteController@index');
-    $route->get('/index/{foo}/a/{fd}','SiteController@index');
-}
+return [
+    ['get','/','SiteController@index'],
+    ['get','/index/{fd}','SiteController@index'],
+    ['get','/index/{foo}/a/{fd}','SiteController@index'],
+]
 ?>

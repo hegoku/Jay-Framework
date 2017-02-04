@@ -1,8 +1,7 @@
 <?php
-namespace JF\Kernel\Routing;
+namespace JF\Kernel;
 
 use Exception;
-use JF\Kernel\Config;
 
 class Route{
     protected static $classNameSpance="App\\Controllers\\";
@@ -69,8 +68,10 @@ class Route{
      * @param string $path
      */
     protected function loadConfig(){
-        $func=Config::load("routes");
-        $func($this);
+        $router=Config::read("routes");
+        foreach($router as $v){
+            $this->addRouter(strtoupper($v[0]),$v[1],$v[2]);
+        }
     }
 
     protected function setRequestUri(){
