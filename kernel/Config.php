@@ -1,15 +1,15 @@
 <?php
-namespace JF;
+namespace JF\Kernel;
 
 class Config{
-    protected $config=[];
+    protected static $basePath;
 
-    public static function load($config){
-        $this->config=$config;
+    public static function setBasePath($path){
+        self::$basePath=$path;
     }
 
-    public static function get($key){
-        return $this->config[$key];
+    public static function load($filename){
+        return require self::$basePath."/config/".$filename.".php";
     }
 }
 ?>

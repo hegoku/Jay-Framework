@@ -2,6 +2,7 @@
 namespace JF\Kernel;
 
 use ReflectionClass;
+use ReflectionMethod;
 use ReflectionParameter;
 use Exception;
 
@@ -100,6 +101,13 @@ class Container{
 
             throw $e;
 		}
+	}
+
+    public function callMethod($class,$method,$parameters){
+        $method=new ReflectionMethod($class,$method);
+		$dependencies=$method->getParameters();
+		$instances = $this->getDependencies($dependencies,$parameters);
+		return call_user_func_array([$class,$method->name],$instances);
 	}
 }
 ?>

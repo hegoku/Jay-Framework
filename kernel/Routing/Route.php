@@ -2,6 +2,7 @@
 namespace JF\Kernel\Routing;
 
 use Exception;
+use JF\Kernel\Config;
 
 class Route{
     protected static $classNameSpance="App\\Controllers\\";
@@ -53,8 +54,8 @@ class Route{
      */
     public $parameters;
 
-    public function __construct($path){
-        $this->loadConfig($path);
+    public function __construct(){
+        $this->loadConfig();
 
         $this->method=$_SERVER['REQUEST_METHOD']?strtoupper($_SERVER['REQUEST_METHOD']):'GET';
 
@@ -67,8 +68,8 @@ class Route{
      * Load route file
      * @param string $path
      */
-    protected function loadConfig($path){
-        $func=require $path;
+    protected function loadConfig(){
+        $func=Config::load("routes");
         $func($this);
     }
 
