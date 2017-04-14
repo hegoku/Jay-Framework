@@ -8,6 +8,7 @@ class App extends Container{
 
 	public function __construct($basePath){
 		$this->basePath=$basePath;
+		$this->loadEnvFile();
 		Config::setBasePath($basePath);
 		Config::load('app');
 	}
@@ -17,6 +18,14 @@ class App extends Container{
 		$controller=$this->make($this->route->controller);
 		echo $this->callMethod($controller,$this->route->action,$this->route->parameters);
 	}
+
+	public function loadEnvFile()
+    {
+        $env_file = parse_ini_file($basePath."/.env");
+        foreach ($env_file as $k=>$v) {
+            putenv($k.'='.$v);
+        }
+    }
 
 }
 ?>

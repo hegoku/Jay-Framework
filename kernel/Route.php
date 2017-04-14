@@ -68,7 +68,7 @@ class Route{
     protected function loadConfig(){
         $router=Config::read("routes");
         foreach($router as $v){
-            $this->addRouter(strtoupper($v[0]),$v[1],$v[2]);
+            $this->addRouter(strtoupper($v['method']),$v['uri'],$v['action']);
         }
     }
 

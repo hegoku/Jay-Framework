@@ -1,7 +1,7 @@
 <?php
 return [
-    ['get','/','SiteController@index'],
-    ['get','/index/{fd}','SiteController@index'],
-    ['get','/index/{foo}/a/{fd}','SiteController@index'],
+    ['method'=>'get', 'uri'=>'/', 'action'=>'SiteController@index'],
+    ['method'=>'get', 'uri'=>'/index/{fd}', 'action'=>'SiteController@index'],
+    ['method'=>'get', 'uri'=>'/index/{foo}/a/{fd}', 'action'=>'SiteController@index'],
 ]
 ?>
