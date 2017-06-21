@@ -21,7 +21,7 @@ class App extends Container{
 
 	public function loadEnvFile()
     {
-        $env_file = parse_ini_file($basePath."/.env");
+        $env_file = parse_ini_file($this->basePath."/.env");
         foreach ($env_file as $k=>$v) {
             putenv($k.'='.$v);
         }
